@@ -5,7 +5,6 @@ extern crate reqwest;
 
 use std::{
     env,
-    io::Write,
     path::{Path, PathBuf},
 };
 
@@ -16,20 +15,26 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         Err(_) => {
             eprintln!("Building against 3Delight 2.1.2");
 
-            #[cfg(target_os = "windows")]
-            let lib = "https://www.dropbox.com/s/9iavkggor0ecc1x/3Delight.dll";
-            #[cfg(target_os = "macos")]
-            let lib = "https://www.dropbox.com/s/7vle92kcqbbyn8o/lib3delight.dylib";
-            #[cfg(target_os = "linux")]
-            let lib = "https://www.dropbox.com/s/hr62te8yg1d2e36/lib3delight.so";
-
             let lib_path = PathBuf::from(&env::var("OUT_DIR")?);
-            let lib_file_path = lib_path.join(Path::new(lib).file_name().unwrap());
 
-            if !lib_file_path.exists() {
-                // Download the libs to build against.
-                let lib_data = reqwest::blocking::get(lib)?.bytes()?;
-                std::fs::File::create(lib_file_path)?.write_all(&lib_data)?;
+            #[cfg(feature = "download_3delight_lib")]
+            {
+                use std::io::Write;
+
+                #[cfg(target_os = "windows")]
+                let lib = "https://www.dropbox.com/s/9iavkggor0ecc1x/3Delight.dll";
+                #[cfg(target_os = "macos")]
+                let lib = "https://www.dropbox.com/s/7vle92kcqbbyn8o/lib3delight.dylib";
+                #[cfg(target_os = "linux")]
+                let lib = "https://www.dropbox.com/s/hr62te8yg1d2e36/lib3delight.so";
+
+                let lib_file_path = lib_path.join(Path::new(lib).file_name().unwrap());
+
+                if !lib_file_path.exists() {
+                    // Download the libs to build against.
+                    let lib_data = reqwest::blocking::get(lib)?.bytes()?;
+                    std::fs::File::create(lib_file_path)?.write_all(&lib_data)?;
+                }
             }
 
             (

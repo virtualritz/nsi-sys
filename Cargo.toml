@@ -12,6 +12,13 @@ homepage = "https://www.3delight.com/"
 documentation = "https://nsi.readthedocs.io/"
 repository = "https://github.com/virtualritz/nsi-sys/"
 
+[features]
+# Whether to download a dynamic library version of 3Delight
+# if the renderer can't be found locally. The renderer is
+# needed as soon as the crate is linked against (e.g. for
+# running the tests).
+download_3delight_lib = []
+
 [build-dependencies]
 bindgen = "0.54.0"
 
