@@ -1,0 +1,20 @@
+[package]
+name = "nsi-sys"
+version = "0.1.4"
+authors = ["Moritz Moeller <virtualritz@protonmail.com>"]
+build = "build.rs"
+edition = "2018"
+license = "BSD-3-Clause"
+license-file = "LICENSE.md"
+description = "Auto-generated Rust bindings for Illumination Research’s Nodal Scene Interface – ɴsɪ."
+readme = "README.md"
+homepage = "https://www.3delight.com/"
+documentation = "https://nsi.readthedocs.io/"
+repository = "https://github.com/virtualritz/nsi-sys/"
+
+[build-dependencies]
+bindgen = "0.54.0"
+
+[build-dependencies.reqwest]
+version = "0.10.6"
+features = ["blocking"]
