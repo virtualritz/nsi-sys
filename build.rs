@@ -32,8 +32,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
                 if !lib_file_path.exists() {
                     // Download the libs to build against.
-                    let lib_data = reqwest::blocking::get(lib)?.bytes()?;
-                    std::fs::File::create(lib_file_path)?.write_all(&lib_data)?;
+                    // We do not care of this fails (yet)
+                    // as this is only needed when the
+                    // crate is linked against.
+                    (|| {
+                        let lib_data = reqwest::blocking::get(lib).ok()?.bytes().ok()?;
+                        std::fs::File::create(lib_file_path)
+                            .ok()?
+                            .write_all(&lib_data)
+                            .ok()?;
+                        Some(())
+                    })();
                 }
             }
 
