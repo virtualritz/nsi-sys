@@ -1,6 +1,6 @@
 [package]
 name = "nsi-sys"
-version = "0.1.6"
+version = "0.1.7"
 authors = ["Moritz Moeller <virtualritz@protonmail.com>"]
 build = "build.rs"
 edition = "2018"
@@ -18,6 +18,9 @@ repository = "https://github.com/virtualritz/nsi-sys/"
 # needed as soon as the crate is linked against (e.g. for
 # running the tests).
 download_3delight_lib = []
+
+[build]
+rustflags = ["-C", "link-args=-Wl,-Bdynamic"]
 
 [build-dependencies]
 bindgen = "0.54.0"

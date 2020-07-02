@@ -11,6 +11,8 @@ use std::{
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // TODO: make this generic & work on Linux/Windows
 
+    println!("cargo:rerun-if-env-changed=DELIGHT");
+
     let (include_path, lib_path) = match &env::var("DELIGHT") {
         Err(_) => {
             eprintln!("Building against 3Delight 2.1.2");
@@ -80,7 +82,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     bindings
         .write_to_file(out_path.join("bindings.rs"))
-        .expect("Couldn't write bindings.");
+        .expect("Could not write bindings.");
 
     Ok(())
 }
