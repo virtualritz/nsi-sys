@@ -1,6 +1,6 @@
 [package]
 name = "nsi-sys"
-version = "0.1.7"
+version = "0.1.8"
 authors = ["Moritz Moeller <virtualritz@protonmail.com>"]
 build = "build.rs"
 edition = "2018"
@@ -23,7 +23,7 @@ download_3delight_lib = []
 rustflags = ["-C", "link-args=-Wl,-Bdynamic"]
 
 [build-dependencies]
-bindgen = "0.54.0"
+bindgen = "0.54.1"
 
 [build-dependencies.reqwest]
 version = "0.10.6"
