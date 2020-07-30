@@ -64,16 +64,21 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     eprintln!("include: {}", include_path.display());
     eprintln!("lib:     {}", lib_path.display());
 
-    // Emit linker searchpath
-    println!("cargo:rustc-link-search={}", lib_path.display());
-    // Link to lib3delight
-    println!("cargo:rustc-link-lib=dylib=3delight");
+    if cfg!(feature = "link_lib3delight") {
+        // Emit linker searchpath
+        println!("cargo:rustc-link-search={}", lib_path.display());
+        // Link to lib3delight
+        println!("cargo:rustc-link-lib=dylib=3delight");
+    }
 
     // Build bindings
     let bindings = bindgen::Builder::default()
         .header("include/wrapper.h")
         // Searchpath
         .clang_arg(format!("-I{}", include_path.display()))
+        // Tell cargo to invalidate the built crate whenever any of the
+        // included header files changed.
+        .parse_callbacks(Box::new(bindgen::CargoCallbacks))
         .generate()
         .expect("Unable to generate bindings");
 
