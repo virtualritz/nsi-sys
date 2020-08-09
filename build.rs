@@ -1,7 +1,8 @@
-#[cfg(any(target_os = "windows", target_os = "macos", target_os = "linux"))]
-// build.rs
-extern crate bindgen;
-extern crate reqwest;
+#![cfg(any(target_os = "windows", target_os = "macos", target_os = "linux"))]
+use bindgen;
+
+#[cfg(feature = "download_3delight_lib")]
+use reqwest;
 
 use std::{
     env,
@@ -74,6 +75,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Build bindings
     let bindings = bindgen::Builder::default()
         .header("include/wrapper.h")
+        .whitelist_function("NSI.*")
+        .whitelist_type("NSI.*")
+        .whitelist_var("NSI.*")
         // Searchpath
         .clang_arg(format!("-I{}", include_path.display()))
         // Tell cargo to invalidate the built crate whenever any of the

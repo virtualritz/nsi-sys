@@ -1,6 +1,6 @@
 [package]
 name = "nsi-sys"
-version = "0.1.9"
+version = "0.1.10"
 authors = ["Moritz Moeller <virtualritz@protonmail.com>"]
 build = "build.rs"
 edition = "2018"
@@ -13,17 +13,15 @@ documentation = "https://nsi.readthedocs.io/"
 repository = "https://github.com/virtualritz/nsi-sys/"
 
 [features]
+default = []
 # Whether to download a dynamic library version of 3Delight
 # if the renderer can't be found locally. The renderer is
 # needed as soon as the crate is linked against (e.g. for
 # running the tests).
-download_lib3delight = []
+download_lib3delight = ["reqwest"]
 # Specify this to link against lib3delight.
 link_lib3delight = []
 
 [build-dependencies]
 bindgen = "0.54.1"
-
-[build-dependencies.reqwest]
-version = "0.10.7"
-features = ["blocking"]
+reqwest = { version = "0.10.7", features = ["blocking"], optional = true }
