@@ -1,6 +1,6 @@
 [package]
 name = "nsi-sys"
-version = "0.1.11"
+version = "0.1.12"
 authors = ["Moritz Moeller <virtualritz@protonmail.com>"]
 build = "build.rs"
 edition = "2018"
@@ -23,5 +23,5 @@ download_lib3delight = ["reqwest"]
 link_lib3delight = []
 
 [build-dependencies]
-bindgen = "0.55.0"
-reqwest = { version = "0.10.7", features = ["blocking"], optional = true }
+bindgen = "0.55.1"
+reqwest = { version = "0.10.8", features = ["blocking"], optional = true }
