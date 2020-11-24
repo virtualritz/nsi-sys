@@ -13,6 +13,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // TODO: make this generic & work on Linux/Windows
 
     println!("cargo:rerun-if-env-changed=DELIGHT");
+    println!("cargo:rerun-if-changed=include/wrapper.h");
 
     let (include_path, lib_path) = match &env::var("DELIGHT") {
         Err(_) => {
@@ -77,6 +78,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .header("include/wrapper.h")
         .whitelist_function("NSI.*")
         .whitelist_type("NSI.*")
+        .whitelist_type("nsi.*")
         .whitelist_var("NSI.*")
         // Searchpath
         .clang_arg(format!("-I{}", include_path.display()))

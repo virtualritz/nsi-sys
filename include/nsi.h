@@ -3,7 +3,11 @@
 
 #include <stddef.h>
 
-#include "dlInterface.h"
+#ifdef _WIN32
+	#define DL_INTERFACE __declspec(dllimport)
+#else
+	#define DL_INTERFACE
+#endif
 
 #ifdef  __cplusplus
 extern "C" {
