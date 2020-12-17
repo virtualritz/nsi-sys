@@ -10,16 +10,6 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build-mac:
-    runs-on: macos-latest
-
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-    - name: Build
-      uses: actions-rs/cargo@v1
-      with:
-        command: build
 
   build-win:
     runs-on: windows-latest
@@ -27,10 +17,8 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Chocolatery
-      uses: crazy-max/ghaction-chocolatey@v1
-      with:
-        args: install llvm
+    - name: Msys2
+      uses: msys2/setup-msys2@v2
     - name: Build
       uses: actions-rs/cargo@v1
       with:
