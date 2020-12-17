@@ -10,16 +10,27 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-
-    strategy:
-      matrix:
-        os: [macos-latest]
-    runs-on: ${{ matrix.os }}
+  build-mac:
+    runs-on: macos-latest
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Build
+      uses: actions-rs/cargo@v1
+      with:
+        command: build
+
+  build-win:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Chocolatery
+      uses: crazy-max/ghaction-chocolatey@v1
+      with:
+        args: install llvm
     - name: Build
       uses: actions-rs/cargo@v1
       with:
