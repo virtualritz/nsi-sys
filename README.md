@@ -16,7 +16,7 @@ masochist who wants to use the C-API directly from Rust.
 
 ### Clang/Bindgen
 The generator makes use of `bindgen`, which depends on *Clang*.
-Instructions for installing `bindgen`'s dependencies for popular OSes
+Instructions for installing `bindgen`’s dependencies for popular OSes
 can be found in
 [their documentation](https://rust-lang.github.io/rust-bindgen/requirements.html).
 
@@ -39,7 +39,7 @@ This is used as a fallback, to build against, if you do not have the
 renderer installed on your system.
 
 It is thus suggested that you
-[download a 3Delight package](https://www.3delight.com/download) for
+[download a *3Delight* package](https://www.3delight.com/download) for
 your platform & install it.
 This will set the `DELIGHT` environment variable that the build script
 is looking for to find a locally installed library to link against.
