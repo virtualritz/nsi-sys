@@ -12,10 +12,11 @@ use std::{
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // TODO: make this generic & work on Linux/Windows
 
-    println!("cargo:rerun-if-env-changed=DELIGHT");
     println!("cargo:rerun-if-changed=include/wrapper.h");
 
-    let (include_path, lib_path) = match &env::var("DELIGHT") {
+    let include_path = PathBuf::from(&env::var("CARGO_MANIFEST_DIR").unwrap()).join("include");
+
+    let lib_path = match &env::var("DELIGHT") {
         Err(_) => {
             eprintln!("Building against 3Delight 2.1.2");
 
@@ -50,16 +51,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                 }
             }
 
-            (
-                PathBuf::from(&env::var("CARGO_MANIFEST_DIR").unwrap()).join("include"),
-                lib_path,
-            )
+            lib_path
         }
         Ok(path) => {
             eprintln!("Building against locally installed 3Delight @ {}", &path);
-            let delight = Path::new(&path);
 
-            (delight.join("include"), delight.join("lib"))
+            Path::new(&path).join("lib")
         }
     };
 
@@ -76,10 +73,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Build bindings
     let bindings = bindgen::Builder::default()
         .header("include/wrapper.h")
-        .whitelist_function("NSI.*")
-        .whitelist_type("NSI.*")
-        .whitelist_type("nsi.*")
-        .whitelist_var("NSI.*")
+        .allowlist_function("NSI.*")
+        .allowlist_type("NSI.*")
+        .allowlist_type("nsi.*")
+        .allowlist_var("NSI.*")
         // Searchpath
         .clang_arg(format!("-I{}", include_path.display()))
         // Tell cargo to invalidate the built crate whenever any of the

@@ -1,12 +1,11 @@
 [package]
 name = "nsi-sys"
-version = "0.1.13"
+version = "0.1.15"
 authors = ["Moritz Moeller <virtualritz@protonmail.com>"]
 build = "build.rs"
 edition = "2018"
-license = "BSD-3-Clause"
-license-file = "LICENSE.md"
-description = "Auto-generated Rust bindings for Illumination Research’s Nodal Scene Interface – ɴsɪ."
+license = "Apache-2.0 OR BSD-3-Clause OR MIT OR Zlib"
+description = "Auto-generated bindings for Illumination Research’s Nodal Scene Interface – ɴsɪ."
 readme = "README.md"
 homepage = "https://www.3delight.com/"
 documentation = "https://nsi.readthedocs.io/"
@@ -23,5 +22,5 @@ download_lib3delight = ["reqwest"]
 link_lib3delight = []
 
 [build-dependencies]
-bindgen = "0.55.1"
-reqwest = { version = "0.10.9", features = ["blocking"], optional = true }
+bindgen = "0.58.0"
+reqwest = { version = "0.11.2", features = ["blocking"], optional = true }

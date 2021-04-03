@@ -4,9 +4,9 @@
 #include <stddef.h>
 
 #ifdef _WIN32
-	#define DL_INTERFACE __declspec(dllimport)
+    #define DL_INTERFACE __declspec(dllimport)
 #else
-	#define DL_INTERFACE
+    #define DL_INTERFACE
 #endif
 
 #ifdef  __cplusplus
