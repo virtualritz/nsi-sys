@@ -1,15 +1,17 @@
 [package]
 name = "nsi-sys"
-version = "0.1.14"
+version = "0.2.0"
 authors = ["Moritz Moeller <virtualritz@protonmail.com>"]
 build = "build.rs"
-edition = "2018"
+edition = "2021"
 license = "Apache-2.0 OR BSD-3-Clause OR MIT OR Zlib"
 description = "Auto-generated bindings for Illumination Research’s Nodal Scene Interface – ɴsɪ."
 readme = "README.md"
-homepage = "https://www.3delight.com/"
 documentation = "https://nsi.readthedocs.io/"
 repository = "https://github.com/virtualritz/nsi-sys/"
+
+[badges]
+maintenance = { status = "passively-maintained" }
 
 [features]
 default = []
@@ -20,7 +22,13 @@ default = []
 download_lib3delight = ["reqwest"]
 # Specify this to link against lib3delight.
 link_lib3delight = []
+# Omit the NSI callbacks from the generated wrapper. This
+# writing a renderer exposting the API.
+omit_functions = []
 
 [build-dependencies]
-bindgen = "0.58.0"
-reqwest = { version = "0.11.2", features = ["blocking"], optional = true }
+bindgen = "0.59.2"
+reqwest = { version = "0.11.9", features = ["blocking"], optional = true }
+
+[dependencies]
+bitflags = "1.3.2"
