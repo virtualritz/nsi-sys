@@ -1,5 +1,5 @@
 #![cfg(any(target_os = "windows", target_os = "macos", target_os = "linux"))]
-use bindgen::callbacks::ParseCallbacks;
+use bindgen::callbacks::{EnumVariantValue, ParseCallbacks};
 
 #[cfg(feature = "download_3delight_lib")]
 use reqwest;
@@ -16,6 +16,34 @@ impl ParseCallbacks for CleanNsiNamingCallbacks {
     fn item_name(&self, original_item_name: &str) -> Option<String> {
         if original_item_name.starts_with("NSI") {
             Some(original_item_name.trim_end_matches("_t").to_string())
+        } else {
+            None
+        }
+    }
+
+    fn enum_variant_name(
+        &self,
+        enum_name: Option<&str>,
+        original_variant_name: &str,
+        _variant_value: EnumVariantValue,
+    ) -> Option<String> {
+        if let Some(enum_name) = enum_name {
+            match enum_name {
+                "enum NSIErrorLevel" => Some(
+                    original_variant_name
+                        .trim_start_matches("NSIErr")
+                        .to_string(),
+                ),
+                "enum NSIStoppingStatus" => {
+                    Some(original_variant_name.trim_start_matches("NSI").to_string())
+                }
+                "enum NSIType_t" => Some(
+                    original_variant_name
+                        .trim_start_matches("NSIType")
+                        .to_string(),
+                ),
+                _ => None,
+            }
         } else {
             None
         }
@@ -90,6 +118,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .allowlist_type("nsi.*")
         .allowlist_var("NSI.*")
         .rustified_enum("NSI.*")
+        .prepend_enum_name(false)
         // Searchpath
         .clang_arg(format!("-I{}", include_path.display()))
         // Tell cargo to invalidate the built crate whenever any of the

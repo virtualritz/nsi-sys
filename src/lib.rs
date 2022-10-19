@@ -45,13 +45,12 @@
 //!    3Delight. Requires the `DELIGHT` environment variable to be set.
 //!
 //! * `omit_functions` – Omit generating bindings for the API's
-//!    functions. This is for the casewhere you want to expose your own
+//!    functions. This is for the case where you want to expose your own
 //!    C-API hooks from your renderer.
 use bitflags::bitflags;
 use std::os::raw::c_int;
 
 mod c_api {
-
     include!(concat!(env!("OUT_DIR"), "/bindings.rs"));
 }
 
